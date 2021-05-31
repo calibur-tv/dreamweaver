@@ -1,6 +1,7 @@
 <template>
   <el-input
     v-model="width"
+    :disabled="width === 'auto'"
     placeholder="请输入内容"
     class="change-width-input"
   >
@@ -12,6 +13,10 @@
       v-model="tail"
       placeholder="单位"
     >
+      <el-option
+        label="自适应"
+        value=""
+      />
       <el-option
         label="px"
         value="px"
@@ -29,10 +34,10 @@
 </template>
 
 <script>
+import { WIDTH_AUTO } from '@/enums'
+
 export default {
   name: 'ChangeWidthInput',
-  components: {},
-  props: {},
   data() {
     return {
       selected: ''
@@ -44,10 +49,15 @@ export default {
     },
     width: {
       get() {
-        const width = this.node.attrs.style.width
+        if (this.node.attrs.class.includes(WIDTH_AUTO)) {
+          return 'auto'
+        }
+
+        const { width } = this.node.attrs.style
         if (width === this.tail) {
           return 0
         }
+
         return parseInt(width)
       },
       set(val) {
@@ -56,17 +66,23 @@ export default {
     },
     tail: {
       get() {
+        if (this.node.attrs.class.includes(WIDTH_AUTO)) {
+          return ''
+        }
+
         return this.node.attrs.style.width.replace(/\d/g, '')
       },
       set(val) {
-        return this.$store.commit('UPDATE_WIDTH', `${this.width}${val}`)
+        if (!val) {
+          return this.$store.commit('UPDATE_WIDTH', val)
+        }
+
+        const width = this.width === 'auto' ? 0 : this.width
+
+        return this.$store.commit('UPDATE_WIDTH', `${width}${val}`)
       }
     }
-  },
-  watch: {},
-  created() {},
-  mounted() {},
-  methods: {}
+  }
 }
 </script>
 

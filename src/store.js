@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { DFSearch, createElement } from './utils'
-import { LAYOUT_NAMES } from './enums'
+import { LAYOUT_NAMES, WIDTH_AUTO } from './enums'
 
 Vue.use(Vuex)
 
@@ -11,6 +11,7 @@ export default new Vuex.Store({
     return {
       tree: newTree,
       node: newTree,
+      parent: null,
       preview: false
     }
   },
@@ -25,6 +26,7 @@ export default new Vuex.Store({
       DFSearch(state.tree, (node, context) => {
         if (node._uid === +uid) {
           state.node = node
+          state.parent = context.parent
           context.break()
         }
       })
@@ -50,7 +52,19 @@ export default new Vuex.Store({
       state.node.attrs.class.push(data)
     },
     UPDATE_WIDTH(state, data) {
-      state.node.attrs.style.width = data
+      if (data) {
+        Vue.set(state.node.attrs.style, 'width', data)
+        const index = state.node.attrs.class.indexOf(WIDTH_AUTO)
+        if (index > -1) {
+          state.node.attrs.class.splice(index, 1)
+        }
+      } else {
+        delete state.node.attrs.style.width
+        if (state.node.attrs.class.includes(WIDTH_AUTO)) {
+          return
+        }
+        state.node.attrs.class.push(WIDTH_AUTO)
+      }
     }
   },
   actions: {}
