@@ -1,4 +1,4 @@
-import { DISPLAY, FLEX_COL, WIDTH_AUTO } from './enums'
+import { DISPLAY, FLEX_COL, FLEX_NOT_SCALE, RECT_SIZE_AUTO } from './enums'
 
 let uid = 0
 
@@ -7,7 +7,7 @@ export const createElement = (tagName, attrs, children) => {
     _uid: uid++,
     tagName,
     attrs: attrs || {
-      class: [DISPLAY, FLEX_COL, 'flex-shrink-0', WIDTH_AUTO],
+      class: [DISPLAY, FLEX_COL, RECT_SIZE_AUTO, FLEX_NOT_SCALE],
       style: {}
     },
     children: children || []

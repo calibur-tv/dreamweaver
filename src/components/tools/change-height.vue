@@ -1,12 +1,12 @@
 <template>
   <el-input
-    v-model="width"
-    :disabled="width === 'auto'"
+    v-model="height"
+    :disabled="height === 'auto'"
     placeholder="请输入内容"
-    class="change-width-input"
+    class="change-height-input"
   >
     <template slot="prepend">
-      设置宽度
+      设置高度
     </template>
     <el-select
       slot="append"
@@ -22,12 +22,8 @@
         value="px"
       />
       <el-option
-        label="%"
-        value="%"
-      />
-      <el-option
-        label="vw"
-        value="vw"
+        label="vh"
+        value="vh"
       />
     </el-select>
   </el-input>
@@ -35,7 +31,7 @@
 
 <script>
 export default {
-  name: 'ChangeWidthInput',
+  name: 'ChangeHeightInput',
   data() {
     return {
       selected: ''
@@ -45,40 +41,40 @@ export default {
     node() {
       return this.$store.state.node
     },
-    width: {
+    height: {
       get() {
-        const { width } = this.node.attrs.style
-        if (!width) {
+        const { height } = this.node.attrs.style
+        if (!height) {
           return 'auto'
         }
 
-        if (width === this.tail) {
+        if (height === this.tail) {
           return 0
         }
 
-        return parseInt(width)
+        return parseInt(height)
       },
       set(val) {
-        return this.$store.commit('UPDATE_WIDTH', val ? `${val}${this.tail}` : `0${this.tail}`)
+        return this.$store.commit('UPDATE_HEIGHT', val ? `${val}${this.tail}` : `0${this.tail}`)
       }
     },
     tail: {
       get() {
-        const { width } = this.node.attrs.style
-        if (width) {
-          return width.replace(/\d/g, '')
+        const { height } = this.node.attrs.style
+        if (height) {
+          return height.replace(/\d/g, '')
         }
 
         return ''
       },
       set(val) {
         if (!val) {
-          return this.$store.commit('UPDATE_WIDTH', val)
+          return this.$store.commit('UPDATE_HEIGHT', val)
         }
 
-        const width = this.width === 'auto' ? 0 : this.width
+        const height = this.height === 'auto' ? 0 : this.height
 
-        return this.$store.commit('UPDATE_WIDTH', `${width}${val}`)
+        return this.$store.commit('UPDATE_HEIGHT', `${height}${val}`)
       }
     }
   }
@@ -86,7 +82,7 @@ export default {
 </script>
 
 <style lang="scss">
-.change-width-input {
+.change-height-input {
   .el-select .el-input {
     width: 120px;
   }

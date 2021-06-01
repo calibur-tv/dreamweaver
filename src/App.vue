@@ -5,6 +5,7 @@
       <deleteNodeBtn />
       <changeLayoutBtn />
       <changeWidthInput />
+      <changeHeightInput />
     </div>
     <div
       class="w-full flex-1"
@@ -24,6 +25,7 @@ import createNodeBtn from './components/tools/create-node'
 import deleteNodeBtn from './components/tools/delete-node'
 import changeLayoutBtn from './components/tools/change-layout'
 import changeWidthInput from './components/tools/change-width'
+import changeHeightInput from './components/tools/change-height'
 import draggableLayout from './components/draggable-layout'
 import rawDisplayer from './components/raw-displayer'
 
@@ -34,6 +36,7 @@ export default {
     deleteNodeBtn,
     changeLayoutBtn,
     changeWidthInput,
+    changeHeightInput,
     draggableLayout,
     rawDisplayer
   },
@@ -74,7 +77,7 @@ body {
 }
 
 .controls {
-  height: 100px;
+  height: 200px;
   background-color: #fefefe;
 }
 </style>
