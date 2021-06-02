@@ -9,7 +9,7 @@ export default {
   name: 'DeleteNodeBtn',
   methods: {
     delElement() {
-      this.$store.commit('DEL_ELEMENT')
+      this.$store.commit('DELETE_NODE')
     }
   }
 }

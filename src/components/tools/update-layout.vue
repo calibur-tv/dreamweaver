@@ -8,7 +8,7 @@
 import { FLEX_COL, FLEX_ROW } from '@/enums'
 
 export default {
-  name: 'ChangeLayoutBtn',
+  name: 'UpdateLayoutBtn',
   computed: {
     node() {
       return this.$store.state.node
@@ -20,7 +20,7 @@ export default {
       if (this.node.attrs.class.includes(FLEX_COL)) {
         result = FLEX_ROW
       }
-      this.$store.commit('SET_LAYOUT', result)
+      this.$store.commit('UPDATE_LAYOUT', result)
     }
   }
 }

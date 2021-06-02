@@ -9,7 +9,7 @@ export default {
   name: 'CreateNodeBtn',
   methods: {
     addElement() {
-      this.$store.commit('ADD_ELEMENT')
+      this.$store.commit('CREATE_NODE')
     }
   }
 }

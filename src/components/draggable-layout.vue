@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     handleClick(evt) {
-      this.$store.commit('UPDATE_NODE', evt.target.dataset.uid)
+      this.$store.commit('SELECT_NODE', evt.target.dataset.uid)
     }
   }
 };

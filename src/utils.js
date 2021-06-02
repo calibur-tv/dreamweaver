@@ -36,9 +36,13 @@ export const DFSearch = (tree, callback, opts = {}) => {
   }
 
   const children = options.getChildren(tree)
-  options.context.parent = tree
+  if (!children.length) {
+    return
+  }
+
   for (let i = 0; i < children.length; i++) {
     options.context.index = i
+    options.context.parent = tree
     DFSearch(children[i], callback, options)
     if (options.isBreak) {
       break

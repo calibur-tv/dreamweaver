@@ -3,9 +3,9 @@
     <div class="controls w-full flex-shrink-0">
       <createNodeBtn />
       <deleteNodeBtn />
-      <changeLayoutBtn />
-      <changeWidthInput />
-      <changeHeightInput />
+      <UpdateLayoutBtn />
+      <UpdateSizeInput attr="width" />
+      <UpdateSizeInput attr="height" />
     </div>
     <div
       class="w-full flex-1"
@@ -23,9 +23,8 @@
 <script>
 import createNodeBtn from './components/tools/create-node'
 import deleteNodeBtn from './components/tools/delete-node'
-import changeLayoutBtn from './components/tools/change-layout'
-import changeWidthInput from './components/tools/change-width'
-import changeHeightInput from './components/tools/change-height'
+import UpdateLayoutBtn from './components/tools/update-layout'
+import UpdateSizeInput from './components/tools/update-size'
 import draggableLayout from './components/draggable-layout'
 import rawDisplayer from './components/raw-displayer'
 
@@ -34,9 +33,8 @@ export default {
   components: {
     createNodeBtn,
     deleteNodeBtn,
-    changeLayoutBtn,
-    changeWidthInput,
-    changeHeightInput,
+    UpdateLayoutBtn,
+    UpdateSizeInput,
     draggableLayout,
     rawDisplayer
   },
@@ -55,7 +53,7 @@ export default {
   },
   methods: {
     handleClick() {
-      this.$store.commit('UPDATE_NODE', this.elements._uid)
+      this.$store.commit('SELECT_NODE', this.elements._uid)
     }
   }
 }
