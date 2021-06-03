@@ -125,8 +125,16 @@ export default new Vuex.Store({
       }
 
       const index = state.node.attrs.class.indexOf(RECT_SIZE_AUTO)
-      if (index > -1 && state.node.attrs.style.width && state.node.attrs.style.height) {
+      if (
+        index > -1 &&
+        (
+          (state.node.attrs.style.width && state.node.attrs.style.height) ||
+          (state.node.attrs.style.height && isColumn) ||
+          (state.node.attrs.style.width && isRow)
+        )
+      ) {
         state.node.attrs.class.splice(index, 1)
+        return
       }
 
       if (
