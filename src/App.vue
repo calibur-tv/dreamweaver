@@ -1,14 +1,18 @@
 <template>
   <div>
-    <div class="controls w-full flex-shrink-0">
+    <div class="controls w-full flex-shrink-0 relative">
       <createNodeBtn />
       <deleteNodeBtn />
       <UpdateLayoutBtn />
       <UpdateSizeInput attr="width" />
       <UpdateSizeInput attr="height" />
+      <UpdateMergeInput attr="top" />
+      <UpdateMergeInput attr="right" />
+      <UpdateMergeInput attr="bottom" />
+      <UpdateMergeInput attr="left" />
     </div>
     <div
-      class="w-full flex-1"
+      class="w-full flex-1 relative transform-gpu"
       @click.stop.prevent="handleClick"
     >
       <draggable-layout :state="elements" />
@@ -25,6 +29,7 @@ import createNodeBtn from './components/tools/create-node'
 import deleteNodeBtn from './components/tools/delete-node'
 import UpdateLayoutBtn from './components/tools/update-layout'
 import UpdateSizeInput from './components/tools/update-size'
+import UpdateMergeInput from './components/tools/update-margin'
 import draggableLayout from './components/draggable-layout'
 import rawDisplayer from './components/raw-displayer'
 
@@ -36,6 +41,7 @@ export default {
     UpdateLayoutBtn,
     UpdateSizeInput,
     draggableLayout,
+    UpdateMergeInput,
     rawDisplayer
   },
   data() {
@@ -75,7 +81,7 @@ body {
 }
 
 .controls {
-  height: 200px;
+  height: 300px;
   background-color: #fefefe;
 }
 </style>

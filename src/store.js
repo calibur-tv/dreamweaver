@@ -104,8 +104,8 @@ export default new Vuex.Store({
       })
     },
     UPDATE_SIZE(state, { attr, size }) {
-      const isColumn = state.parent.attrs.class.includes(FLEX_COL)
-      const isRow = state.parent.attrs.class.includes(FLEX_ROW)
+      const isColumn = state.parent ? state.parent.attrs.class.includes(FLEX_COL) : true
+      const isRow = state.parent ? state.parent.attrs.class.includes(FLEX_ROW) : false
       if (size) {
         Vue.set(state.node.attrs.style, attr, size)
         if (
@@ -143,6 +143,14 @@ export default new Vuex.Store({
       ) {
         state.node.attrs.class.push(RECT_SIZE_AUTO)
       }
+    },
+    UPDATE_MARGIN(state, { order, value }) {
+      let margin = ['0px', '0px', '0px', '0px']
+      if (state.node.attrs.style.margin) {
+        margin = state.node.attrs.style.margin.split(' ')
+      }
+      margin[order] = value
+      Vue.set(state.node.attrs.style, 'margin', margin.join(' '))
     }
   },
   actions: {}

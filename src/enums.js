@@ -4,4 +4,7 @@ export const FLEX_ROW = 'flex-row'
 export const RECT_SIZE_AUTO = 'flex-auto'
 export const FLEX_NOT_SCALE = 'flex-shrink-0'
 export const FLEX_MAIN_AXIS = 'flex-basis'
+export const POS_REL = 'relative'
+export const POS_FIX = 'fixed'
+export const POS_ABS = 'absolute'
 export const LAYOUT_NAMES = [FLEX_COL, FLEX_ROW]
