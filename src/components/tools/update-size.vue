@@ -6,7 +6,7 @@
     class="update-size-input"
   >
     <template slot="prepend">
-      设置{{ chineseName }}
+      {{ chineseName }}
     </template>
     <el-select
       slot="append"

@@ -3,17 +3,22 @@
     v-bind="dragOptions"
     :list="state.children"
     :class="['draggable-layout', { 'is-selected': state._uid === node._uid }, state.attrs.class]"
-    :style="[state.attrs.style, styleSet]"
-    @start="drag = true"
-    @end="drag = false"
-    @click.stop.native="handleClick"
+    :style="[state.attrs.style, previewStyle]"
+    @add="handleAdd"
+    @end="handleEnd"
+    @move="handleMove"
+    @sort="handleSort"
+    @start="handleStart"
+    @clone="handleClone"
+    @filter="handleFilter"
+    @change="handleChange"
+    @remove="handleRemove"
+    @update="handleUpdate"
+    @choose="handleChoose"
+    @unchoose="handleUnchoose"
+    @click.stop.prevent.native="handleClick"
   >
-    <transition-group
-      type="transition"
-      tag="div"
-      class="draggable-wrap"
-      :name="!drag ? 'flip-list' : null"
-    >
+    <transition-group :name="!drag ? 'flip-list' : null">
       <template v-for="element in state.children">
         <component
           :is="element.tagName"
@@ -26,7 +31,7 @@
 </template>
 
 <script>
-import draggable from "vuedraggable";
+import draggable from 'vuedraggable'
 import randomColor from 'randomcolor'
 
 export default {
@@ -50,13 +55,11 @@ export default {
       return {
         tag: 'div',
         animation: 200,
-        group: "layout",
-        disabled: false,
-        ghostClass: "ghost",
+        group: 'layout',
         'data-uid': this.state._uid
       }
     },
-    styleSet() {
+    previewStyle() {
       return {
         backgroundColor: randomColor({
           luminosity: 'light',
@@ -71,6 +74,43 @@ export default {
   methods: {
     handleClick(evt) {
       this.$store.commit('SELECT_NODE', evt.currentTarget.dataset.uid)
+    },
+    handleStart() {
+      this.drag = true
+    },
+    handleEnd() {
+      this.drag = false
+      console.log('handleEnd')
+    },
+    handleChoose() {
+      console.log('handleChoose')
+    },
+    handleUnchoose() {
+      console.log('handleUnchoose')
+    },
+    handleAdd() {
+      console.log('handleAdd')
+    },
+    handleUpdate() {
+      console.log('handleUpdate')
+    },
+    handleMove() {
+      console.log('handleMove')
+    },
+    handleSort() {
+      console.log('handleSort')
+    },
+    handleRemove() {
+      console.log('handleRemove')
+    },
+    handleFilter() {
+      console.log('handleFilter')
+    },
+    handleChange() {
+      console.log('handleChange')
+    },
+    handleClone() {
+      console.log('handleClone')
     }
   }
 };
@@ -78,19 +118,9 @@ export default {
 
 <style lang="scss">
 .draggable-layout {
-  padding: 10px;
   outline: 1px dashed;
   min-height: 100px;
-
-  .draggable-wrap {
-    width: 100%;
-    height: 100%;
-    display: inherit;
-    flex-direction: inherit;
-    flex-shrink: inherit;
-    flex-basis: inherit;
-    flex-grow: inherit;
-  }
+  padding: 10px;
 
   &.is-selected {
     outline: 1px solid red;
@@ -104,7 +134,7 @@ export default {
     transition: transform 0s;
   }
 
-  .ghost {
+  .sortable-ghost {
     opacity: 0.5;
     background: #c8ebfb;
   }

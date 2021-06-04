@@ -1,27 +1,35 @@
 <template>
-  <el-button @click="setLayout">
-    设置布局
-  </el-button>
+  <div class="update-layout-select">
+    <el-select
+      v-model="layout"
+      placeholder="布局方式"
+    >
+      <el-option
+        label="竖向布局"
+        value="flex-col"
+      />
+      <el-option
+        label="横向布局"
+        value="flex-row"
+      />
+    </el-select>
+  </div>
 </template>
 
 <script>
-import { FLEX_COL, FLEX_ROW } from '@/enums'
+import { LAYOUT_NAMES } from '@/enums'
 
 export default {
-  name: 'UpdateLayoutBtn',
+  name: 'UpdateLayoutSelect',
   computed: {
-    node() {
-      return this.$store.state.node
-    }
-  },
-  methods: {
-    setLayout() {
-      let result = FLEX_COL
-      if (this.node.attrs.class.includes(FLEX_COL)) {
-        result = FLEX_ROW
+    layout: {
+      get() {
+        return this.$store.state.node.attrs.class.find(_ => LAYOUT_NAMES.includes(_))
+      },
+      set(val) {
+        return this.$store.commit('UPDATE_LAYOUT', val)
       }
-      this.$store.commit('UPDATE_LAYOUT', result)
-    }
+    },
   }
 }
 </script>

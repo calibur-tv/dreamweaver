@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { DFSearch, createElement } from './utils'
-import { LAYOUT_NAMES, RECT_SIZE_AUTO, FLEX_COL, FLEX_ROW, FLEX_MAIN_AXIS } from './enums'
+import { LAYOUT_NAMES, RECT_SIZE_AUTO, FLEX_COL, FLEX_ROW, FLEX_MAIN_AXIS, POS_NAMES } from './enums'
 
 Vue.use(Vuex)
 
@@ -145,12 +145,38 @@ export default new Vuex.Store({
       }
     },
     UPDATE_MARGIN(state, { order, value }) {
-      let margin = ['0px', '0px', '0px', '0px']
-      if (state.node.attrs.style.margin) {
-        margin = state.node.attrs.style.margin.split(' ')
+      let margin = state.node.attrs.style.margin
+      if (margin) {
+        margin = margin.split(' ')
+      } else {
+        margin = ['0px', '0px', '0px', '0px']
       }
       margin[order] = value
       Vue.set(state.node.attrs.style, 'margin', margin.join(' '))
+    },
+    UPDATE_POSITION(state, value) {
+      const oldIndex = state.node.attrs.class.findIndex(_ => POS_NAMES.includes(_))
+      if (oldIndex > -1) {
+        state.node.attrs.class.splice(oldIndex, 1)
+      }
+      state.node.attrs.class.push(value)
+    },
+    UPDATE_RECT(state, { attr, order, value }) {
+      if (order === -1) {
+        Vue.set(state.node.attrs.style, attr, value)
+        return
+      }
+      let transform = state.node.attrs.style.transform
+      if (transform) {
+        transform = transform
+          .replace('translate(', '')
+          .replace(')', '')
+          .split(',')
+      } else {
+        transform = ['0px', '0px']
+      }
+      transform[order] = value
+      Vue.set(state.node.attrs.style, 'transform', `translate(${transform.join(',')})`)
     }
   },
   actions: {}

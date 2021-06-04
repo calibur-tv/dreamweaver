@@ -8,3 +8,4 @@ export const POS_REL = 'relative'
 export const POS_FIX = 'fixed'
 export const POS_ABS = 'absolute'
 export const LAYOUT_NAMES = [FLEX_COL, FLEX_ROW]
+export const POS_NAMES = [POS_REL, POS_ABS, POS_FIX]

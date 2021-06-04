@@ -1,15 +1,28 @@
 <template>
   <div>
     <div class="controls w-full flex-shrink-0 relative">
-      <createNodeBtn />
-      <deleteNodeBtn />
-      <UpdateLayoutBtn />
-      <UpdateSizeInput attr="width" />
-      <UpdateSizeInput attr="height" />
-      <UpdateMergeInput attr="top" />
-      <UpdateMergeInput attr="right" />
-      <UpdateMergeInput attr="bottom" />
-      <UpdateMergeInput attr="left" />
+      <div>
+        <createNodeBtn />
+        <deleteNodeBtn />
+        <UpdateLayoutSelect />
+        <updatePositionSelect />
+      </div>
+      <div>
+        <UpdateSizeInput attr="width" />
+        <UpdateSizeInput attr="height" />
+      </div>
+      <div>
+        <UpdateMergeInput attr="top" />
+        <UpdateMergeInput attr="right" />
+        <UpdateMergeInput attr="bottom" />
+        <UpdateMergeInput attr="left" />
+      </div>
+      <div>
+        <updateRectInput attr="top" />
+        <updateRectInput attr="left" />
+        <updateRectInput attr="translate-x" />
+        <updateRectInput attr="translate-y" />
+      </div>
     </div>
     <div
       class="w-full flex-1 relative transform-gpu"
@@ -25,23 +38,27 @@
 </template>
 
 <script>
+import rawDisplayer from './components/raw-displayer'
+import draggableLayout from './components/draggable-layout'
 import createNodeBtn from './components/tools/create-node'
 import deleteNodeBtn from './components/tools/delete-node'
-import UpdateLayoutBtn from './components/tools/update-layout'
+import UpdateLayoutSelect from './components/tools/update-layout'
 import UpdateSizeInput from './components/tools/update-size'
 import UpdateMergeInput from './components/tools/update-margin'
-import draggableLayout from './components/draggable-layout'
-import rawDisplayer from './components/raw-displayer'
+import updatePositionSelect from './components/tools/update-position'
+import updateRectInput from './components/tools/update-rect'
 
 export default {
   name: 'App',
   components: {
     createNodeBtn,
     deleteNodeBtn,
-    UpdateLayoutBtn,
+    UpdateLayoutSelect,
     UpdateSizeInput,
     draggableLayout,
     UpdateMergeInput,
+    updatePositionSelect,
+    updateRectInput,
     rawDisplayer
   },
   data() {
@@ -81,7 +98,14 @@ body {
 }
 
 .controls {
-  height: 300px;
+  height: 200px;
   background-color: #fefefe;
+
+  > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 </style>
