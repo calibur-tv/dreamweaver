@@ -1,11 +1,9 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+// import Vue from 'vue'
+import { createStore } from 'vuex'
 import { DFSearch, createElement } from './utils'
 import { LAYOUT_NAMES, RECT_SIZE_AUTO, FLEX_COL, FLEX_ROW, FLEX_MAIN_AXIS, POS_NAMES } from './enums'
 
-Vue.use(Vuex)
-
-export default new Vuex.Store({
+export default createStore({
   state: () => {
     const newTree = createElement()
     return {
@@ -16,7 +14,7 @@ export default new Vuex.Store({
   },
   mutations: {
     UPDATE_TREE(state, data) {
-      state.tree = Vue.set(data)
+      state.tree = data
     },
     SELECT_NODE(state, uid) {
       DFSearch(state.tree, (node, context) => {
@@ -107,20 +105,24 @@ export default new Vuex.Store({
       const isColumn = state.parent ? state.parent.attrs.class.includes(FLEX_COL) : true
       const isRow = state.parent ? state.parent.attrs.class.includes(FLEX_ROW) : false
       if (size) {
-        Vue.set(state.node.attrs.style, attr, size)
+        state.node.attrs.style[attr] = size
+        // Vue.set(state.node.attrs.style, attr, size)
         if (
           (isColumn && attr === 'height') ||
           (isRow && attr === 'width')
         ) {
-          Vue.set(state.node.attrs.style, FLEX_MAIN_AXIS, size)
+          state.node.attrs.style[FLEX_MAIN_AXIS] = size
+          // Vue.set(state.node.attrs.style, FLEX_MAIN_AXIS, size)
         }
       } else {
-        Vue.set(state.node.attrs.style, attr, '')
+        state.node.attrs.style[attr] = ''
+        // Vue.set(state.node.attrs.style, attr, '')
         if (
           (isColumn && attr === 'height') ||
           (isRow && attr === 'width')
         ) {
-          Vue.set(state.node.attrs.style, FLEX_MAIN_AXIS, '')
+          state.node.attrs.style[FLEX_MAIN_AXIS] = ''
+          // Vue.set(state.node.attrs.style, FLEX_MAIN_AXIS, '')
         }
       }
 
@@ -152,7 +154,8 @@ export default new Vuex.Store({
         margin = ['0px', '0px', '0px', '0px']
       }
       margin[order] = value
-      Vue.set(state.node.attrs.style, 'margin', margin.join(' '))
+      state.node.attrs.style.margin = margin.join(' ')
+      // Vue.set(state.node.attrs.style, 'margin', margin.join(' '))
     },
     UPDATE_POSITION(state, value) {
       const oldIndex = state.node.attrs.class.findIndex(_ => POS_NAMES.includes(_))
@@ -163,7 +166,8 @@ export default new Vuex.Store({
     },
     UPDATE_RECT(state, { attr, order, value }) {
       if (order === -1) {
-        Vue.set(state.node.attrs.style, attr, value)
+        state.node.attrs.style[attr] = value
+        // Vue.set(state.node.attrs.style, attr, value)
         return
       }
       let transform = state.node.attrs.style.transform
@@ -176,7 +180,8 @@ export default new Vuex.Store({
         transform = ['0px', '0px']
       }
       transform[order] = value
-      Vue.set(state.node.attrs.style, 'transform', `translate(${transform.join(',')})`)
+      state.node.attrs.style.transform = `translate(${transform.join(',')})`
+      // Vue.set(state.node.attrs.style, 'transform', `translate(${transform.join(',')})`)
     }
   },
   actions: {}

@@ -4,6 +4,13 @@
     :list="state.children"
     :class="['draggable-layout', { 'is-selected': state._uid === node._uid }, state.attrs.class]"
     :style="[state.attrs.style, previewStyle]"
+    tag="transition-group"
+    :component-data="{
+      tag: 'div',
+      type: 'transition-group',
+      name: !drag ? 'flip-list' : null
+    }"
+    item-key="_uid"
     @add="handleAdd"
     @end="handleEnd"
     @move="handleMove"
@@ -16,17 +23,14 @@
     @update="handleUpdate"
     @choose="handleChoose"
     @unchoose="handleUnchoose"
-    @click.stop.prevent.native="handleClick"
+    @click.stop.prevent="handleClick"
   >
-    <transition-group :name="!drag ? 'flip-list' : null">
-      <template v-for="element in state.children">
-        <component
-          :is="element.tagName"
-          :key="element._uid"
-          :state="element"
-        />
-      </template>
-    </transition-group>
+    <template #item="{ element }">
+      <component
+        :is="element.tagName"
+        :state="element"
+      />
+    </template>
   </draggable>
 </template>
 
@@ -53,7 +57,6 @@ export default {
   computed: {
     dragOptions() {
       return {
-        tag: 'div',
         animation: 200,
         group: 'layout',
         'data-uid': this.state._uid
@@ -119,7 +122,7 @@ export default {
 <style lang="scss">
 .draggable-layout {
   outline: 1px dashed;
-  min-height: 100px;
+  min-height: 50px;
   padding: 10px;
 
   &.is-selected {
@@ -141,14 +144,6 @@ export default {
 
   .list-group {
     min-height: 20px;
-  }
-
-  .list-group-item {
-    cursor: move;
-  }
-
-  .list-group-item > div {
-    cursor: pointer;
   }
 }
 </style>

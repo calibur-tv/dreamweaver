@@ -1,13 +1,14 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import store from './store'
 import App from './App.vue'
 import './assets/tailwind.css'
-import './plugins/element.js'
 import 'normalize.css'
+import ElementPlus from 'element-plus'
+import 'element-plus/lib/theme-chalk/index.css'
+import locale from 'element-plus/lib/locale/lang/zh-cn'
 
-const app = new Vue({
-  store,
-  render: h => h(App),
-})
+const app = createApp(App)
 
-app.$mount('#app')
+app.use(store)
+app.use(ElementPlus, { locale })
+app.mount('#app')

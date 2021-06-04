@@ -5,23 +5,24 @@
     placeholder="请输入内容"
     class="update-margin-input"
   >
-    <template slot="prepend">
+    <template #prepend>
       {{ chineseName }}
     </template>
-    <el-select
-      slot="append"
-      v-model="tail"
-      placeholder="单位"
-    >
-      <el-option
-        label="px"
-        value="px"
-      />
-      <el-option
-        label="自适应"
-        value="auto"
-      />
-    </el-select>
+    <template #append>
+      <el-select
+        v-model="tail"
+        placeholder="单位"
+      >
+        <el-option
+          label="px"
+          value="px"
+        />
+        <el-option
+          label="自适应"
+          value="auto"
+        />
+      </el-select>
+    </template>
   </el-input>
 </template>
 

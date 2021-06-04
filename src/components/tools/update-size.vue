@@ -5,33 +5,34 @@
     placeholder="请输入内容"
     class="update-size-input"
   >
-    <template slot="prepend">
+    <template #prepend>
       {{ chineseName }}
     </template>
-    <el-select
-      slot="append"
-      v-model="tail"
-      placeholder="单位"
-    >
-      <el-option
-        label="自适应"
-        value=""
-      />
-      <el-option
-        label="px"
-        value="px"
-      />
-      <el-option
-        v-if="attr === 'height'"
-        label="vh"
-        value="vh"
-      />
-      <el-option
-        v-if="attr === 'width'"
-        label="vw"
-        value="vw"
-      />
-    </el-select>
+    <template #append>
+      <el-select
+        v-model="tail"
+        placeholder="单位"
+      >
+        <el-option
+          label="自适应"
+          value=""
+        />
+        <el-option
+          label="px"
+          value="px"
+        />
+        <el-option
+          v-if="attr === 'height'"
+          label="vh"
+          value="vh"
+        />
+        <el-option
+          v-if="attr === 'width'"
+          label="vw"
+          value="vw"
+        />
+      </el-select>
+    </template>
   </el-input>
 </template>
 

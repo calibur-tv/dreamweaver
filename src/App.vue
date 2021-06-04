@@ -31,7 +31,9 @@
       <draggable-layout :state="elements" />
       <raw-displayer
         :value="elements"
+        :style="{ backgroundColor: 'transparent' }"
         title="state"
+        @click.stop.prevent="testClick"
       />
     </div>
   </div>
@@ -77,6 +79,9 @@ export default {
   methods: {
     handleClick() {
       this.$store.commit('SELECT_NODE', this.elements._uid)
+    },
+    testClick() {
+      console.log('testClick')
     }
   }
 }
