@@ -43,6 +43,7 @@
       "plugin:vue/vue3-recommended",
       "eslint:recommended"
     ],
+    "ignorePatterns": ["**/externals/**"],
     "parserOptions": {
       "parser": "babel-eslint"
     },
