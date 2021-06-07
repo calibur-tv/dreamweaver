@@ -28,18 +28,18 @@
       class="w-full flex-1 relative transform-gpu"
       @click.stop.prevent="handleClick"
     >
-      <draggable-layout :state="elements" />
+      <draggable-layout class="test-wrap" :state="elements" />
       <raw-displayer
         :value="elements"
         :style="{ backgroundColor: 'transparent' }"
         title="state"
-        @click.stop.prevent="testClick"
       />
     </div>
   </div>
 </template>
 
 <script>
+import interact from 'interactjs'
 import rawDisplayer from './components/raw-displayer'
 import draggableLayout from './components/draggable-layout'
 import createNodeBtn from './components/tools/create-node'
@@ -76,12 +76,47 @@ export default {
       }
     }
   },
+  mounted() {
+    interact('.test-wrap').dropzone({
+      accept: '.draggable-layout',
+      overlap: 0.75,
+      ondropactivate(event) {
+        // add active dropzone feedback
+        // event.target.classList.add('drop-active')
+        console.log('ondropactivate', event)
+      },
+      ondragenter(event) {
+        console.log('ondragenter', event)
+        // var draggableElement = event.relatedTarget
+        // var dropzoneElement = event.target
+
+        // feedback the possibility of a drop
+        // dropzoneElement.classList.add('drop-target')
+        // draggableElement.classList.add('can-drop')
+        // draggableElement.textContent = 'Dragged in'
+      },
+      ondragleave(event) {
+        // remove the drop feedback style
+        // event.target.classList.remove('drop-target')
+        // event.relatedTarget.classList.remove('can-drop')
+        // event.relatedTarget.textContent = 'Dragged out'
+        console.log('ondragleave', event)
+      },
+      ondrop(event) {
+        // event.relatedTarget.textContent = 'Dropped'
+        console.log('ondrop', event)
+      },
+      ondropdeactivate(event) {
+        // remove active dropzone feedback
+        // event.target.classList.remove('drop-active')
+        // event.target.classList.remove('drop-target')
+        console.log('ondropdeactivate', event)
+      }
+    })
+  },
   methods: {
     handleClick() {
       this.$store.commit('SELECT_NODE', this.elements._uid)
-    },
-    testClick() {
-      console.log('testClick')
     }
   }
 }

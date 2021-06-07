@@ -977,6 +977,11 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
+"@interactjs/types@1.10.11":
+  version "1.10.11"
+  resolved "https://registry.npm.taobao.org/@interactjs/types/download/@interactjs/types-1.10.11.tgz#29be25d503f9c7842df062fa3cda5b044a47cf2a"
+  integrity sha1-Kb4l1QP5x4Qt8GL6PNpbBEpHzyo=
+
 "@intervolga/optimize-cssnano-plugin@^1.0.5":
   version "1.0.6"
   resolved "https://registry.nlark.com/@intervolga/optimize-cssnano-plugin/download/@intervolga/optimize-cssnano-plugin-1.0.6.tgz#be7c7846128b88f6a9b1d1261a0ad06eb5c0fdf8"
@@ -4934,6 +4939,13 @@ inquirer@^7.1.0:
     string-width "^4.1.0"
     strip-ansi "^6.0.0"
     through "^2.3.6"
+
+interactjs@^1.10.11:
+  version "1.10.11"
+  resolved "https://registry.npm.taobao.org/interactjs/download/interactjs-1.10.11.tgz#0b9eabe37f1f82fff68e22faad51269b8f2038ea"
+  integrity sha1-C56r438fgv/2jiL6rVEmm48gOOo=
+  dependencies:
+    "@interactjs/types" "1.10.11"
 
 internal-ip@^4.3.0:
   version "4.3.0"

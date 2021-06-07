@@ -1,40 +1,24 @@
 <template>
-  <draggable
-    v-bind="dragOptions"
-    :list="state.children"
+  <div
+    :data-uid="state._uid"
     :class="['draggable-layout', { 'is-selected': state._uid === node._uid }, state.attrs.class]"
     :style="[state.attrs.style, previewStyle]"
-    tag="transition-group"
-    :component-data="{
-      tag: 'div',
-      type: 'transition-group',
-      name: !drag ? 'flip-list' : null
-    }"
-    item-key="_uid"
-    @add="handleAdd"
-    @end="handleEnd"
-    @move="handleMove"
-    @sort="handleSort"
-    @start="handleStart"
-    @clone="handleClone"
-    @filter="handleFilter"
-    @change="handleChange"
-    @remove="handleRemove"
-    @update="handleUpdate"
-    @choose="handleChoose"
-    @unchoose="handleUnchoose"
     @click.stop.prevent="handleClick"
   >
-    <template #item="{ element }">
+    <template
+      v-for="element in state.children"
+      :key="element._uid"
+    >
       <component
         :is="element.tagName"
         :state="element"
       />
     </template>
-  </draggable>
+  </div>
 </template>
 
 <script>
+import interact from 'interactjs'
 import draggable from 'vuedraggable'
 import randomColor from 'randomcolor'
 
@@ -49,19 +33,7 @@ export default {
       type: Object
     }
   },
-  data() {
-    return {
-      drag: false
-    }
-  },
   computed: {
-    dragOptions() {
-      return {
-        animation: 200,
-        group: 'layout',
-        'data-uid': this.state._uid
-      }
-    },
     previewStyle() {
       return {
         backgroundColor: randomColor({
@@ -74,46 +46,32 @@ export default {
       return this.$store.state.node
     }
   },
+  mounted() {
+    interact(this.$el).resizable({
+      edges: { left: false, right: true, bottom: true, top: false },
+      listeners: {
+        move: (event) => {
+          console.log(event)
+          var target = event.target
+          var x = (parseFloat(target.getAttribute('data-x')) || 0)
+          var y = (parseFloat(target.getAttribute('data-y')) || 0)
+
+          target.style.width = event.rect.width + 'px'
+          target.style.height = event.rect.height + 'px'
+
+          // translate when resizing from top or left edges
+          x += event.deltaRect.left
+          y += event.deltaRect.top
+
+          target.setAttribute('data-x', x)
+          target.setAttribute('data-y', y)
+        }
+      }
+    })
+  },
   methods: {
     handleClick(evt) {
       this.$store.commit('SELECT_NODE', evt.currentTarget.dataset.uid)
-    },
-    handleStart() {
-      this.drag = true
-    },
-    handleEnd() {
-      this.drag = false
-      console.log('handleEnd')
-    },
-    handleChoose() {
-      console.log('handleChoose')
-    },
-    handleUnchoose() {
-      console.log('handleUnchoose')
-    },
-    handleAdd() {
-      console.log('handleAdd')
-    },
-    handleUpdate() {
-      console.log('handleUpdate')
-    },
-    handleMove() {
-      console.log('handleMove')
-    },
-    handleSort() {
-      console.log('handleSort')
-    },
-    handleRemove() {
-      console.log('handleRemove')
-    },
-    handleFilter() {
-      console.log('handleFilter')
-    },
-    handleChange() {
-      console.log('handleChange')
-    },
-    handleClone() {
-      console.log('handleClone')
     }
   }
 };
