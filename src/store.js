@@ -1,7 +1,6 @@
-// import Vue from 'vue'
 import { createStore } from 'vuex'
 import { DFSearch, createElement } from './utils'
-import { LAYOUT_NAMES, RECT_SIZE_AUTO, FLEX_COL, FLEX_ROW, FLEX_MAIN_AXIS, POS_NAMES } from './enums'
+import { LAYOUT_NAMES, RECT_SIZE_AUTO, FLEX_COL, FLEX_ROW, FLEX_MAIN_AXIS, POS_NAMES, POS_REL } from './enums'
 
 export default createStore({
   state: () => {
@@ -31,8 +30,8 @@ export default createStore({
         }
       })
     },
-    CREATE_NODE(state) {
-      state.node.children.push(createElement('draggable-layout'))
+    CREATE_NODE(state, data) {
+      state.node.children.push(createElement(data))
     },
     DELETE_NODE(state) {
       if (!state.parent) {
@@ -117,12 +116,12 @@ export default createStore({
           state.node.attrs.style[FLEX_MAIN_AXIS] = size
         }
       } else {
-        state.node.attrs.style[attr] = ''
+        state.node.attrs.style[attr] = undefined
         if (
           (isColumn && attr === 'height') ||
           (isRow && attr === 'width')
         ) {
-          state.node.attrs.style[FLEX_MAIN_AXIS] = ''
+          state.node.attrs.style[FLEX_MAIN_AXIS] = undefined
         }
       }
 
@@ -162,6 +161,20 @@ export default createStore({
         state.node.attrs.class.splice(oldIndex, 1)
       }
       state.node.attrs.class.push(value)
+      if (value === POS_REL) {
+        state.node.attrs.style.transform = undefined
+        state.node.attrs.style.left = undefined
+        state.node.attrs.style.top = undefined
+      } else {
+        state.node.attrs.style.left = '0px'
+        state.node.attrs.style.top = '0px'
+      }
+      state.parent.children.forEach((item, index) => {
+        if (item._uid === state.node._uid) {
+          state.parent.children.splice(index, 1)
+        }
+      })
+      state.parent.children.push(state.node)
     },
     UPDATE_RECT(state, { attr, order, value }) {
       if (order === -1) {

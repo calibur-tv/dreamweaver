@@ -13,7 +13,7 @@ export default {
   name: 'CreateNodeBtn',
   methods: {
     addElement() {
-      this.$store.commit('CREATE_NODE')
+      this.$store.commit('CREATE_NODE', 'draggable-layout')
     }
   }
 }
