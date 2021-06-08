@@ -1,5 +1,6 @@
 <template>
   <el-input
+    v-if="!isRelative"
     v-model="size"
     placeholder="请输入内容"
     class="update-rect-input"
@@ -26,6 +27,7 @@
 </template>
 
 <script>
+import { POS_REL } from '@/enums'
 const POS_ENUM = ['top', 'left']
 const TRANSFORM_ENUM = ['translate-x', 'translate-y']
 
@@ -44,6 +46,9 @@ export default {
   computed: {
     node() {
       return this.$store.state.node
+    },
+    isRelative() {
+      return this.node.attrs.class.includes(POS_REL)
     },
     size: {
       get() {
