@@ -114,8 +114,16 @@ export default {
     width: 120px;
   }
 
+  .el-input-group__prepend {
+    width: 77px;
+  }
+
   .el-input-group__append {
     background-color: #fff;
+  }
+
+  .el-input__inner {
+    cursor: pointer !important;
   }
 }
 </style>

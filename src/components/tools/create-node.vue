@@ -1,7 +1,11 @@
 <template>
-  <el-button @click="addElement">
-    添加节点
-  </el-button>
+  <el-button
+    icon="el-icon-plus"
+    circle
+    plain
+    type="success"
+    @click="addElement"
+  />
 </template>
 
 <script>

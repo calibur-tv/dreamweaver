@@ -1,23 +1,16 @@
 <template>
-  <div>
-    <h3>{{ title }}</h3>
-    <pre>{{ valueString }}</pre>
-  </div>
+  <pre>{{ valueString }}</pre>
 </template>
 
 <script>
-const props = {
-  title: {
-    required: true,
-    type: String
-  },
-  value: {
-    required: true
-  }
-};
 export default {
   name: "RawDisplayer",
-  props,
+  props: {
+    value: {
+      required: true,
+      type: Object
+    }
+  },
   computed: {
     valueString() {
       return JSON.stringify(this.value, null, 2);

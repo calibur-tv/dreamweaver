@@ -1,10 +1,11 @@
 <template>
-  <draggable
+  <Draggable
     v-bind="dragOptions"
     :list="state.children"
     :class="['draggable-layout', { 'is-selected': state._uid === node._uid }, state.attrs.class]"
     :style="[state.attrs.style, previewStyle]"
     item-key="_uid"
+    @end="handleChange"
     @click.stop.prevent="handleClick"
   >
     <template #item="{ element }">
@@ -13,18 +14,18 @@
         :state="element"
       />
     </template>
-  </draggable>
+  </Draggable>
 </template>
 
 <script>
 import randomColor from 'randomcolor'
-import draggable from '../externals/draggable/vuedraggable.js'
+import Draggable from '../externals/draggable/vuedraggable.js'
 import { POS_REL } from '@/enums'
 
 export default {
   name: "DraggableLayout",
   components: {
-    draggable
+    Draggable
   },
   props: {
     state: {
@@ -35,6 +36,7 @@ export default {
   computed: {
     dragOptions() {
       return {
+        id: `dl-${this.state._uid}`,
         group: 'layout',
         filter: e => !e.target.classList.contains(POS_REL),
         'data-uid': this.state._uid
@@ -44,7 +46,7 @@ export default {
       return {
         backgroundColor: randomColor({
           luminosity: 'light',
-          alpha: 0.1
+          alpha: 0.05
         })
       }
     },
@@ -55,6 +57,9 @@ export default {
   methods: {
     handleClick(evt) {
       this.$store.commit('SELECT_NODE', evt.currentTarget.dataset.uid)
+    },
+    handleChange() {
+      this.$store.commit('UPDATE_TREE', this.$store.state.tree)
     }
   }
 };
@@ -63,12 +68,13 @@ export default {
 <style lang="scss">
 .draggable-layout {
   outline: 1px dashed;
-  min-height: 50px;
-  min-width: 50px;
-  padding: 10px;
+  min-height: 150px;
+  min-width: 150px;
+  padding: 20px;
+  transition: box-shadow .2s ease-in;
 
   &.is-selected {
-    outline: 1px solid red;
+    box-shadow: inset 1px 1px 4px 4px red;
   }
 
   .sortable-ghost {

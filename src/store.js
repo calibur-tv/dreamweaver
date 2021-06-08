@@ -15,6 +15,12 @@ export default createStore({
   mutations: {
     UPDATE_TREE(state, data) {
       state.tree = data
+      DFSearch(state.tree, (node, context) => {
+        if (node._uid === state.node._uid) {
+          state.parent = context.parent
+          context.break()
+        }
+      })
     },
     SELECT_NODE(state, uid) {
       DFSearch(state.tree, (node, context) => {
@@ -80,8 +86,6 @@ export default createStore({
         if (mainAxisValue) {
           child.attrs.style[crossAxis] = mainAxisValue
           child.attrs.style[FLEX_MAIN_AXIS] = child.attrs.style[mainAxis]
-          // 如果是 fix 定位，那么 flex-basis 无效，还是需要宽高属性
-          // child.attrs.style[mainAxis] = ''
         }
 
         const singleSize = [child.attrs.style.width, child.attrs.style.height].filter(_ => _).length === 1
@@ -106,23 +110,19 @@ export default createStore({
       const isRow = state.parent ? state.parent.attrs.class.includes(FLEX_ROW) : false
       if (size) {
         state.node.attrs.style[attr] = size
-        // Vue.set(state.node.attrs.style, attr, size)
         if (
           (isColumn && attr === 'height') ||
           (isRow && attr === 'width')
         ) {
           state.node.attrs.style[FLEX_MAIN_AXIS] = size
-          // Vue.set(state.node.attrs.style, FLEX_MAIN_AXIS, size)
         }
       } else {
         state.node.attrs.style[attr] = ''
-        // Vue.set(state.node.attrs.style, attr, '')
         if (
           (isColumn && attr === 'height') ||
           (isRow && attr === 'width')
         ) {
           state.node.attrs.style[FLEX_MAIN_AXIS] = ''
-          // Vue.set(state.node.attrs.style, FLEX_MAIN_AXIS, '')
         }
       }
 
@@ -155,7 +155,6 @@ export default createStore({
       }
       margin[order] = value
       state.node.attrs.style.margin = margin.join(' ')
-      // Vue.set(state.node.attrs.style, 'margin', margin.join(' '))
     },
     UPDATE_POSITION(state, value) {
       const oldIndex = state.node.attrs.class.findIndex(_ => POS_NAMES.includes(_))
@@ -167,7 +166,6 @@ export default createStore({
     UPDATE_RECT(state, { attr, order, value }) {
       if (order === -1) {
         state.node.attrs.style[attr] = value
-        // Vue.set(state.node.attrs.style, attr, value)
         return
       }
       let transform = state.node.attrs.style.transform
@@ -181,7 +179,6 @@ export default createStore({
       }
       transform[order] = value
       state.node.attrs.style.transform = `translate(${transform.join(',')})`
-      // Vue.set(state.node.attrs.style, 'transform', `translate(${transform.join(',')})`)
     }
   },
   actions: {}

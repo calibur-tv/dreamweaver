@@ -125,5 +125,9 @@ export default {
   .el-input-group__append {
     background-color: #fff;
   }
+
+  .el-input__inner {
+    cursor: pointer !important;
+  }
 }
 </style>

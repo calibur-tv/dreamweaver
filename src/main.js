@@ -6,9 +6,11 @@ import 'normalize.css'
 import ElementPlus from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css'
 import locale from 'element-plus/lib/locale/lang/zh-cn'
+import DraggableController from '@/components/draggable-controller'
 
 const app = createApp(App)
 
 app.use(store)
-app.use(ElementPlus, { locale })
+app.component(DraggableController.name, DraggableController)
+app.use(ElementPlus, { locale, size: 'mini', zIndex: 3000 })
 app.mount('#app')

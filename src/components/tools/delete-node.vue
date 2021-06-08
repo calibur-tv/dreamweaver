@@ -1,7 +1,11 @@
 <template>
-  <el-button @click="delElement">
-    删除节点
-  </el-button>
+  <el-button
+    icon="el-icon-delete"
+    circle
+    plain
+    type="danger"
+    @click="delElement"
+  />
 </template>
 
 <script>

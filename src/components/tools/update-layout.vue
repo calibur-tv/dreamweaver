@@ -1,19 +1,18 @@
 <template>
-  <div class="update-layout-select">
-    <el-select
-      v-model="layout"
-      placeholder="布局方式"
-    >
-      <el-option
-        label="竖向布局"
-        value="flex-col"
-      />
-      <el-option
-        label="横向布局"
-        value="flex-row"
-      />
-    </el-select>
-  </div>
+  <el-select
+    v-model="layout"
+    placeholder="布局方式"
+    class="update-layout-select"
+  >
+    <el-option
+      label="竖向布局"
+      value="flex-col"
+    />
+    <el-option
+      label="横向布局"
+      value="flex-row"
+    />
+  </el-select>
 </template>
 
 <script>
