@@ -2,6 +2,7 @@
   <el-input
     v-model="size"
     :disabled="tail === 'auto'"
+    type="number"
     placeholder="请输入内容"
     class="update-margin-input"
   >
@@ -113,8 +114,17 @@ export default {
     width: 120px;
   }
 
+  .el-input-group__prepend {
+    width: 89px;
+  }
+
   .el-input-group__append {
     background-color: #fff;
+  }
+
+  .el-select__caret,
+  .el-input__inner {
+    cursor: pointer !important;
   }
 }
 </style>

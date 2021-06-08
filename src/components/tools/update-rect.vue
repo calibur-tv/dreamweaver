@@ -2,6 +2,7 @@
   <el-input
     v-if="!isRelative"
     v-model="size"
+    type="number"
     placeholder="请输入内容"
     class="update-rect-input"
   >
@@ -126,6 +127,11 @@ export default {
     background-color: #fff;
   }
 
+  .el-input-group__prepend {
+    width: 89px;
+  }
+
+  .el-select__caret,
   .el-input__inner {
     cursor: pointer !important;
   }
