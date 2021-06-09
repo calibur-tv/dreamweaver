@@ -68,10 +68,10 @@ export default {
 <style lang="scss">
 .draggable-layout {
   outline: 1px dashed;
-  min-height: 150px;
-  min-width: 150px;
-  padding: 20px;
-  transition: box-shadow .2s ease-in;
+  min-height: 50px;
+  min-width: 50px;
+  padding: 10px;
+  transition: box-shadow .1s;
 
   &.is-selected {
     box-shadow: inset 1px 1px 4px 4px red;

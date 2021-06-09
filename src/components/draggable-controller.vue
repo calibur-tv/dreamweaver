@@ -6,9 +6,9 @@
     <div class="draggable-controller">
       <createNodeBtn />
       <deleteNodeBtn />
-      <el-popover
+      <ElPopover
         :width="372"
-        :append-to-body="false"
+        transition="none"
         trigger="click"
         popper-class="draggable-popover"
       >
@@ -42,7 +42,7 @@
             <updateRectInput attr="translate-y" />
           </div>
         </div>
-      </el-popover>
+      </ElPopover>
     </div>
   </teleport>
 </template>

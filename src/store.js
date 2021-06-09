@@ -160,7 +160,9 @@ export default createStore({
       if (oldIndex > -1) {
         state.node.attrs.class.splice(oldIndex, 1)
       }
+
       state.node.attrs.class.push(value)
+
       if (value === POS_REL) {
         state.node.attrs.style.transform = undefined
         state.node.attrs.style.left = undefined
@@ -169,6 +171,11 @@ export default createStore({
         state.node.attrs.style.left = '0px'
         state.node.attrs.style.top = '0px'
       }
+
+      if (!state.parent) {
+        return
+      }
+
       state.parent.children.forEach((item, index) => {
         if (item._uid === state.node._uid) {
           state.parent.children.splice(index, 1)
