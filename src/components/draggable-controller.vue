@@ -8,6 +8,7 @@
       <deleteNodeBtn />
       <el-popover
         :width="372"
+        :append-to-body="false"
         trigger="click"
         popper-class="draggable-popover"
       >

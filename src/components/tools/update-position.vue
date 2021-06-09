@@ -1,6 +1,7 @@
 <template>
   <el-select
     v-model="position"
+    :popper-append-to-body="false"
     placeholder="定位方式"
     class="update-position-select"
   >

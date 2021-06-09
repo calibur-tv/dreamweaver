@@ -1,6 +1,7 @@
 <template>
   <el-select
     v-model="layout"
+    :popper-append-to-body="false"
     placeholder="布局方式"
     class="update-layout-select"
   >

@@ -12,6 +12,7 @@
     <template #append>
       <el-select
         v-model="tail"
+        :popper-append-to-body="false"
         placeholder="单位"
       >
         <el-option
