@@ -1,5 +1,5 @@
 <template>
-  <Draggable
+  <draggable
     v-bind="dragOptions"
     :list="state.children"
     :class="['draggable-layout', { 'is-selected': state._uid === node._uid }, state.attrs.class]"
@@ -14,7 +14,7 @@
         :state="element"
       />
     </template>
-  </Draggable>
+  </draggable>
 </template>
 
 <script>

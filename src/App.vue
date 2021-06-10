@@ -1,21 +1,26 @@
 <template>
-  <draggable-layout
-    class="transform-gpu"
-    :state="elements"
-  />
-  <draggable-controller />
+  <div class="flex flex-row">
+    <draggable-layout
+      class="transform-gpu"
+      :state="elements"
+    />
+    <draggable-component class="flex-shrink-0" />
+  </div>
   <raw-displayer :value="elements" />
+  <draggable-controller />
 </template>
 
 <script>
 import RawDisplayer from './components/raw-displayer'
 import DraggableLayout from './components/draggable-layout'
+import DraggableComponent from './components/draggable-component'
 import DraggableController from './components/draggable-controller'
 
 export default {
   name: 'App',
   components: {
     DraggableLayout,
+    DraggableComponent,
     DraggableController,
     RawDisplayer
   },
