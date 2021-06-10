@@ -2,13 +2,14 @@ import { DISPLAY, FLEX_COL, FLEX_NOT_SCALE, RECT_SIZE_AUTO, POS_REL } from './en
 
 let uid = 0
 
-export const createElement = (tagName, attrs, children) => {
+export const createElement = (name, data, children) => {
   return {
     _uid: uid++,
-    tagName,
-    attrs: attrs || {
+    name,
+    data: data || {
       class: [DISPLAY, FLEX_COL, RECT_SIZE_AUTO, FLEX_NOT_SCALE, POS_REL],
-      style: {}
+      style: {},
+      props: {}
     },
     children: children || []
   }

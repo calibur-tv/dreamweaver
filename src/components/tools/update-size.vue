@@ -54,7 +54,7 @@ export default {
     },
     size: {
       get() {
-        const size = this.node.attrs.style[this.attr]
+        const size = this.node.data.style[this.attr]
         if (!size) {
           return 'auto'
         }
@@ -74,7 +74,7 @@ export default {
     },
     tail: {
       get() {
-        const size = this.node.attrs.style[this.attr]
+        const size = this.node.data.style[this.attr]
         if (size) {
           return size.replace(/\d/g, '')
         }

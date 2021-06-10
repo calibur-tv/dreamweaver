@@ -24,7 +24,7 @@ export default {
   computed: {
     layout: {
       get() {
-        return this.$store.state.node.attrs.class.find(_ => LAYOUT_NAMES.includes(_))
+        return this.$store.state.node.data.class.find(_ => LAYOUT_NAMES.includes(_))
       },
       set(val) {
         return this.$store.commit('UPDATE_LAYOUT', val)

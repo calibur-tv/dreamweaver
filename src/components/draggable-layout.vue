@@ -2,15 +2,15 @@
   <draggable
     v-bind="dragOptions"
     :list="state.children"
-    :class="['draggable-layout', { 'is-selected': state._uid === node._uid }, state.attrs.class]"
-    :style="[state.attrs.style, previewStyle]"
+    :class="['draggable-layout', { 'is-selected': state._uid === node._uid }, state.data.class]"
+    :style="[state.data.style, previewStyle]"
     item-key="_uid"
     @end="handleChange"
     @click.stop.prevent="handleClick"
   >
     <template #item="{ element }">
       <component
-        :is="element.tagName"
+        :is="element.name"
         :state="element"
       />
     </template>

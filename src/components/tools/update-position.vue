@@ -33,7 +33,7 @@ export default {
   computed: {
     position: {
       get() {
-        return this.$store.state.node.attrs.class.find(_ => POS_NAMES.includes(_))
+        return this.$store.state.node.data.class.find(_ => POS_NAMES.includes(_))
       },
       set(val) {
         return this.$store.commit('UPDATE_POSITION', val)

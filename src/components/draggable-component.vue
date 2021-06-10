@@ -8,7 +8,7 @@
     >
       <template #item="{ element }">
         <div class="list-group-item">
-          {{ element.tagName }}
+          {{ element.name }}
         </div>
       </template>
     </draggable>

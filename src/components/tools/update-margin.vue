@@ -55,7 +55,7 @@ export default {
     },
     size: {
       get() {
-        const margin = this.node.attrs.style.margin
+        const margin = this.node.data.style.margin
         if (!margin) {
           return 0
         }
@@ -75,7 +75,7 @@ export default {
     },
     tail: {
       get() {
-        const margin = this.node.attrs.style.margin
+        const margin = this.node.data.style.margin
         if (!margin) {
           return 'px'
         }

@@ -50,11 +50,11 @@ export default {
       return this.$store.state.node
     },
     isRelative() {
-      return this.node.attrs.class.includes(POS_REL)
+      return this.node.data.class.includes(POS_REL)
     },
     size: {
       get() {
-        const { style } = this.node.attrs
+        const { style } = this.node.data
         let value = '0'
         if (POS_ENUM.includes(this.attr)) {
           value = style[this.attr] || '0'
@@ -80,7 +80,7 @@ export default {
     },
     tail: {
       get() {
-        const { style } = this.node.attrs
+        const { style } = this.node.data
         let value = 'px'
         if (POS_ENUM.includes(this.attr)) {
           value = style[this.attr] || 'px'
