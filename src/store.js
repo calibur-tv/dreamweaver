@@ -4,7 +4,7 @@ import { LAYOUT_NAMES, RECT_SIZE_AUTO, FLEX_COL, FLEX_ROW, FLEX_MAIN_AXIS, POS_N
 
 export default createStore({
   state: () => {
-    const newTree = createElement()
+    const newTree = createElement('div')
     return {
       tree: newTree,
       node: newTree,

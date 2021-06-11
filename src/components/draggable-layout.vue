@@ -1,47 +1,150 @@
-<template>
-  <draggable
-    v-bind="dragOptions"
-    :list="state.children"
-    :class="['draggable-layout', { 'is-selected': state._uid === node._uid }, state.data.class]"
-    :style="[state.data.style, previewStyle]"
-    item-key="_uid"
-    @end="handleChange"
-    @click.stop.prevent="handleClick"
-  >
-    <template #item="{ element }">
-      <component
-        :is="element.name"
-        :state="element"
-      />
-    </template>
-  </draggable>
-</template>
-
 <script>
+import { h, resolveComponent } from 'vue'
 import randomColor from 'randomcolor'
-import Draggable from '../externals/draggable/vuedraggable.js'
 import { POS_REL } from '@/enums'
+import Sortable from '../externals/sortable/Sortable'
+
+const tags = [
+  "a",
+  "abbr",
+  "address",
+  "area",
+  "article",
+  "aside",
+  "audio",
+  "b",
+  "base",
+  "bdi",
+  "bdo",
+  "blockquote",
+  "body",
+  "br",
+  "button",
+  "canvas",
+  "caption",
+  "cite",
+  "code",
+  "col",
+  "colgroup",
+  "data",
+  "datalist",
+  "dd",
+  "del",
+  "details",
+  "dfn",
+  "dialog",
+  "div",
+  "dl",
+  "dt",
+  "em",
+  "embed",
+  "fieldset",
+  "figcaption",
+  "figure",
+  "footer",
+  "form",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "head",
+  "header",
+  "hgroup",
+  "hr",
+  "html",
+  "i",
+  "iframe",
+  "img",
+  "input",
+  "ins",
+  "kbd",
+  "label",
+  "legend",
+  "li",
+  "link",
+  "main",
+  "map",
+  "mark",
+  "math",
+  "menu",
+  "menuitem",
+  "meta",
+  "meter",
+  "nav",
+  "noscript",
+  "object",
+  "ol",
+  "optgroup",
+  "option",
+  "output",
+  "p",
+  "param",
+  "picture",
+  "pre",
+  "progress",
+  "q",
+  "rb",
+  "rp",
+  "rt",
+  "rtc",
+  "ruby",
+  "s",
+  "samp",
+  "script",
+  "section",
+  "select",
+  "slot",
+  "small",
+  "source",
+  "span",
+  "strong",
+  "style",
+  "sub",
+  "summary",
+  "sup",
+  "svg",
+  "table",
+  "tbody",
+  "td",
+  "template",
+  "textarea",
+  "tfoot",
+  "th",
+  "thead",
+  "time",
+  "title",
+  "tr",
+  "track",
+  "u",
+  "ul",
+  "var",
+  "video",
+  "wbr"
+]
 
 export default {
-  name: "DraggableLayout",
-  components: {
-    Draggable
-  },
+  name: 'DraggableLayout',
   props: {
-    state: {
-      required: true,
-      type: Object
+    id: {
+      type: [Number, String],
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
+    },
+    data: {
+      type: Object,
+      required: true
+    },
+    children: {
+      type: Array,
+      required: true
     }
   },
   computed: {
-    dragOptions() {
-      return {
-        id: `dl-${this.state._uid}`,
-        group: 'layout',
-        filter: e => !e.target.classList.contains(POS_REL),
-        'data-uid': this.state._uid
-      }
-    },
     previewStyle() {
       return {
         backgroundColor: randomColor({
@@ -54,15 +157,45 @@ export default {
       return this.$store.state.node
     }
   },
+  mounted() {
+    this.$nextTick(() => {
+      new Sortable(this.$el, {
+        group: 'layout',
+        filter: e => !e.target.classList.contains(POS_REL),
+      })
+    })
+  },
   methods: {
     handleClick(evt) {
-      this.$store.commit('SELECT_NODE', evt.currentTarget.dataset.uid)
-    },
-    handleChange() {
-      this.$store.commit('UPDATE_TREE', this.$store.state.tree)
+      evt.stopPropagation()
+      this.$store.commit('SELECT_NODE', this.id)
     }
+  },
+  render() {
+    const isHtmlTag = tags.includes(this.name)
+    return h(
+        isHtmlTag ? this.name : resolveComponent(this.name),
+        {
+          id: `dl-${this.id}`,
+          props: isHtmlTag ? null : this.data.props,
+          style: [this.data.style, this.previewStyle],
+          class: ['draggable-layout', { 'is-selected': this.id === this.node._uid }, this.data.class],
+          onClick: this.handleClick
+        },
+        this.children.map(item => {
+          return h(
+              resolveComponent('DraggableLayout'),
+              {
+                id: item._uid,
+                name: item.name,
+                data: item.data,
+                children: item.children
+              }
+          )
+        })
+    )
   }
-};
+}
 </script>
 
 <style lang="scss">

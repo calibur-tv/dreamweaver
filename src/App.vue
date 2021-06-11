@@ -1,8 +1,11 @@
 <template>
   <div class="flex flex-row">
     <draggable-layout
+      :id="elements._uid"
+      :name="elements.name"
+      :data="elements.data"
+      :children="elements.children"
       class="transform-gpu"
-      :state="elements"
     />
     <draggable-component class="flex-shrink-0" />
   </div>

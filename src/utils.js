@@ -8,8 +8,7 @@ export const createElement = (name, data, children) => {
     name,
     data: data || {
       class: [DISPLAY, FLEX_COL, RECT_SIZE_AUTO, FLEX_NOT_SCALE, POS_REL],
-      style: {},
-      props: {}
+      style: {}
     },
     children: children || []
   }
