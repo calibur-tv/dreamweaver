@@ -1,6 +1,6 @@
 <template>
   <ul>
-    <slot />
+    <li>123123123</li>
   </ul>
 </template>
 

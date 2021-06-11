@@ -178,11 +178,11 @@ export default {
         {
           id: `dl-${this.id}`,
           props: isHtmlTag ? null : this.data.props,
-          style: [this.data.style, this.previewStyle],
+          style: isHtmlTag ? [this.data.style, this.previewStyle] : this.data.style,
           class: ['draggable-layout', { 'is-selected': this.id === this.node._uid }, this.data.class],
           onClick: this.handleClick
         },
-        this.children.map(item => {
+        this.children.length ? this.children.map(item => {
           return h(
               resolveComponent('DraggableLayout'),
               {
@@ -192,7 +192,7 @@ export default {
                 children: item.children
               }
           )
-        })
+        }) : this.$slots.defaults
     )
   }
 }
@@ -201,13 +201,12 @@ export default {
 <style lang="scss">
 .draggable-layout {
   outline: 1px dashed;
-  min-height: 50px;
-  min-width: 50px;
-  padding: 10px;
-  transition: box-shadow .1s;
+  min-height: 100px;
+  min-width: 100px;
+  padding: 15px;
 
   &.is-selected {
-    box-shadow: inset 1px 1px 4px 4px red;
+    outline: 1px solid red;
   }
 
   .sortable-ghost {
